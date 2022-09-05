@@ -39,6 +39,7 @@ static const Rule rules[] = {
 	{ "St",		NULL,		NULL,		0,		0,		1,		0,		-1 },
 	{ "discord",	NULL,		NULL,		0,		0,		0,		0,		 1 },
 	{ "Steam",	NULL,		NULL,		0,		1,		0,		1,		 1 }
+	{ "Microsoft Teams - Preview",	NULL,		NULL,		0,		0,		0,		1,		 1 }
 };
 
 /* layout(s) */
@@ -91,14 +92,14 @@ static const char *termcmd[]  = { "st", NULL };
  * Xresources preferences to load at startup
  */
 ResourcePref resources[] = {
+		{ "color15",			STRING,  &normfgcolor },
+		{ "color0",				STRING,  &normbgcolor },
+		{ "color0",				STRING,  &normbordercolor },
+		{ "color15",			STRING,  &selfgcolor },
+		{ "color2",				STRING,  &selbgcolor },
+		{ "color2",				STRING,  &selbordercolor },
 		{ "font",               STRING,  &font },
 		{ "dmenufont",          STRING,  &dmenufont },
-		{ "normbgcolor",        STRING,  &normbgcolor },
-		{ "normbordercolor",    STRING,  &normbordercolor },
-		{ "normfgcolor",        STRING,  &normfgcolor },
-		{ "selbgcolor",         STRING,  &selbgcolor },
-		{ "selbordercolor",     STRING,  &selbordercolor },
-		{ "selfgcolor",         STRING,  &selfgcolor },
 		{ "borderpx",          	INTEGER, &borderpx },
 		{ "snap",          		INTEGER, &snap },
 		{ "showbar",          	INTEGER, &showbar },
@@ -124,8 +125,8 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY,                       XK_q,      killclient,     {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
-	{ MODKEY,						XK_f,      togglefullscr,  {0} },
-	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
+	{ MODKEY,			XK_f,      togglefullscr,  {0} },
+	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
