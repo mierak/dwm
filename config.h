@@ -38,8 +38,8 @@ static const Rule rules[] = {
 	{ "Firefox",	NULL,		NULL,		1 << 8,		0,		0,		0,		-1 },
 	{ "St",		NULL,		NULL,		0,		0,		1,		0,		-1 },
 	{ "discord",	NULL,		NULL,		0,		0,		0,		0,		 1 },
-	{ "Steam",	NULL,		NULL,		0,		1,		0,		1,		 1 }
-	{ "Microsoft Teams - Preview",	NULL,		NULL,		0,		0,		0,		1,		 1 }
+	{ "Steam",	NULL,		NULL,		0,		1,		0,		1,		 0 },
+	{ "Microsoft Teams - Preview",	NULL,		NULL,		0,		0,		0,		1,		 -1 }
 };
 
 /* layout(s) */
