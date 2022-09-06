@@ -15,6 +15,8 @@ static const char *fonts[]          = {
 	"FiraCode Nerd Font:pixelsize=13:antialias=true:autohint=true", 
 	"NotoColorEmoji:pixelsize=16:antialias=true:autohint=true"  
 	};
+
+static char selmonindicator[] = "[]";
 static char normbgcolor[]           = "#222222";
 static char normbordercolor[]       = "#444444";
 static char normfgcolor[]           = "#bbbbbb";
