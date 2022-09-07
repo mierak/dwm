@@ -11,6 +11,7 @@ static int smartgaps          = 1;        /* 1 means no outer gap when there is 
 static int showbar            = 1;        /* 0 means no bar */
 static int topbar             = 1;        /* 0 means bottom bar */
 static char font[]            = "monospace:size=10";
+static char dmenufont[]       = "monospace:size=10";
 static const char *fonts[]          = { 
 	"FiraCode Nerd Font:pixelsize=13:antialias=true:autohint=true", 
 	"NotoColorEmoji:pixelsize=16:antialias=true:autohint=true"  
@@ -65,6 +66,11 @@ static char *colors[][3] = {
 
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+
+static const unsigned int ulinepad	= 5;	/* horizontal padding between the underline and tag */
+static const unsigned int ulinestroke	= 2;	/* thickness / height of the underline */
+static const unsigned int ulinevoffset	= 0;	/* how far above the bottom of the bar the line should appear */
+static const int ulineall 		= 0;	/* 1 to show underline on all tags, 0 for just the active ones */
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -125,21 +131,20 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbordercolor, "-sf", selfgcolor, NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbordercolor, "-sf", selfgcolor, NULL };
 static const char *termcmd[]  = { "st", NULL };
 
 /*
  * Xresources preferences to load at startup
  */
 ResourcePref resources[] = {
-		{ "color0",				STRING,  &normbordercolor },
-		{ "color8",				STRING,  &selbordercolor },
-		{ "color0",				STRING,  &normbgcolor },
-		{ "color4",				STRING,  &normfgcolor },
-		{ "color0",				STRING,  &selfgcolor },
-		{ "color4",				STRING,  &selbgcolor },
+		{ "borderinactive",		STRING,  &normbordercolor },
+		{ "borderselected",		STRING,  &selbordercolor },
+		{ "background",			STRING,  &normbgcolor },
+		{ "foreground",			STRING,  &normfgcolor },
+		{ "foreground",			STRING,  &selfgcolor },
+		{ "backgroundsecondary",STRING,  &selbgcolor },
 		{ "font",	            STRING,  &font },
-		// { "dmenufont",          STRING,  &dmenufont },
 		{ "borderpx",          	INTEGER, &borderpx },
 		{ "snap",          		INTEGER, &snap },
 		{ "showbar",          	INTEGER, &showbar },
@@ -147,11 +152,11 @@ ResourcePref resources[] = {
 		{ "nmaster",          	INTEGER, &nmaster },
 		{ "resizehints",       	INTEGER, &resizehints },
 		{ "mfact",      	 	FLOAT,   &mfact },
-		{ "color0", 			STRING,  &termcol0 },
-		{ "color1", 			STRING,  &termcol1 },
+		{ "background",			STRING,  &termcol0 },
+		{ "foreground",			STRING,  &termcol1 },
 		{ "color2", 			STRING,  &termcol2 },
 		{ "color3", 			STRING,  &termcol3 },
-		{ "color4", 			STRING,  &termcol4 },
+		{ "backgroundsecondary",STRING,  &termcol4 },
 		{ "color5", 			STRING,  &termcol5 },
 		{ "color6", 			STRING,  &termcol6 },
 		{ "color7", 			STRING,  &termcol7 },

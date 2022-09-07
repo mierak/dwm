@@ -16,6 +16,8 @@ static const char *fonts[]          = {
 	"FiraCode Nerd Font:pixelsize=13:antialias=true:autohint=true", 
 	"NotoColorEmoji:pixelsize=16:antialias=true:autohint=true"  
 	};
+
+static char selmonindicator[] = "[]";
 static char normbgcolor[]           = "#222222";
 static char normbordercolor[]       = "#444444";
 static char normfgcolor[]           = "#bbbbbb";
@@ -64,6 +66,11 @@ static char *colors[][3] = {
 
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+
+static const unsigned int ulinepad	= 5;	/* horizontal padding between the underline and tag */
+static const unsigned int ulinestroke	= 2;	/* thickness / height of the underline */
+static const unsigned int ulinevoffset	= 0;	/* how far above the bottom of the bar the line should appear */
+static const int ulineall 		= 0;	/* 1 to show underline on all tags, 0 for just the active ones */
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -131,14 +138,13 @@ static const char *termcmd[]  = { "st", NULL };
  * Xresources preferences to load at startup
  */
 ResourcePref resources[] = {
-		{ "color0",				STRING,  &normbordercolor },
-		{ "color8",				STRING,  &selbordercolor },
-		{ "color0",				STRING,  &normbgcolor },
-		{ "color4",				STRING,  &normfgcolor },
-		{ "color0",				STRING,  &selfgcolor },
-		{ "color4",				STRING,  &selbgcolor },
+		{ "borderinactive",		STRING,  &normbordercolor },
+		{ "borderselected",		STRING,  &selbordercolor },
+		{ "background",			STRING,  &normbgcolor },
+		{ "foreground",			STRING,  &normfgcolor },
+		{ "foreground",			STRING,  &selfgcolor },
+		{ "backgroundsecondary",STRING,  &selbgcolor },
 		{ "font",	            STRING,  &font },
-		// { "dmenufont",          STRING,  &dmenufont },
 		{ "borderpx",          	INTEGER, &borderpx },
 		{ "snap",          		INTEGER, &snap },
 		{ "showbar",          	INTEGER, &showbar },
@@ -146,6 +152,22 @@ ResourcePref resources[] = {
 		{ "nmaster",          	INTEGER, &nmaster },
 		{ "resizehints",       	INTEGER, &resizehints },
 		{ "mfact",      	 	FLOAT,   &mfact },
+		{ "background",			STRING,  &termcol0 },
+		{ "foreground",			STRING,  &termcol1 },
+		{ "color2", 			STRING,  &termcol2 },
+		{ "color3", 			STRING,  &termcol3 },
+		{ "backgroundsecondary",STRING,  &termcol4 },
+		{ "color5", 			STRING,  &termcol5 },
+		{ "color6", 			STRING,  &termcol6 },
+		{ "color7", 			STRING,  &termcol7 },
+		{ "color8", 			STRING,  &termcol8 },
+		{ "color9", 			STRING,  &termcol9 },
+		{ "color10", 			STRING,  &termcol10 },
+		{ "color11", 			STRING,  &termcol11 },
+		{ "color12", 			STRING,  &termcol12 },
+		{ "color13", 			STRING,  &termcol13 },
+		{ "color14", 			STRING,  &termcol14 },
+		{ "color15", 			STRING,  &termcol15 },
 };
 
 
