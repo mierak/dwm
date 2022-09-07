@@ -1021,7 +1021,11 @@ drawbar(Monitor *m)
 	if ((w = m->ww - tw - x) > bh) {
 		if (m->sel) {
 			drw_setscheme(drw, scheme[SchemeNorm]);
-			drw_text(drw, x, 0, w, bh, lrpad / 2, m->sel->name, 0);
+			/* Draw title only on active monitor, else fill empty bar */
+			if (m == selmon)
+				drw_text(drw, x, 0, w, bh, lrpad / 2, m->sel->name, 0);
+			else
+				drw_rect(drw, x, 0, w, bh, 1, 1);
 			if (m->sel->isfloating)
 				drw_rect(drw, x + boxs, boxs, boxw, boxw, m->sel->isfixed, 0);
 		} else {
