@@ -1,6 +1,10 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
+static const unsigned int ulinepad	= 5;	/* horizontal padding between the underline and tag */
+static const unsigned int ulinestroke	= 2;	/* thickness / height of the underline */
+static const unsigned int ulinevoffset	= 0;	/* how far above the bottom of the bar the line should appear */
+static const int ulineall 		= 0;	/* 1 to show underline on all tags, 0 for just the active ones */
 static unsigned int borderpx  = 4;        /* border pixel of windows */
 static unsigned int snap      = 32;       /* snap pixel */
 static const unsigned int gappih    = 10;       /* horiz inner gap between windows */
@@ -67,11 +71,6 @@ static char *colors[][3] = {
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
-static const unsigned int ulinepad	= 5;	/* horizontal padding between the underline and tag */
-static const unsigned int ulinestroke	= 2;	/* thickness / height of the underline */
-static const unsigned int ulinevoffset	= 0;	/* how far above the bottom of the bar the line should appear */
-static const int ulineall 		= 0;	/* 1 to show underline on all tags, 0 for just the active ones */
-
 static const Rule rules[] = {
 	/* xprop(1):
 	 *	WM_CLASS(STRING) = instance, class
@@ -83,7 +82,9 @@ static const Rule rules[] = {
 	{ "St",		NULL,		NULL,		0,		0,		1,		0,		-1 },
 	{ "discord",	NULL,		NULL,		0,		0,		0,		0,		 1 },
 	{ "Steam",	NULL,		NULL,		0,		1,		0,		1,		 0 },
-	{ "Microsoft Teams - Preview",	NULL,		NULL,		0,		0,		0,		1,		 -1 }
+	{ "Steam",	NULL,		"Friends List",	0,		0,		0,		1,		 1 },
+	{ "Microsoft Teams - Preview",	NULL,		NULL,		0,		0,		0,		1,		 -1 },
+	{ NULL,       	NULL,       	"Event Tester", 0,              0,	        0, 	        1,	        -1 }
 };
 
 /* layout(s) */
@@ -95,21 +96,22 @@ static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen win
 #define FORCE_VSPLIT 1  /* nrowgrid layout: force two clients to always split vertically */
 #include "vanitygaps.c"
 
+/* first entry is default */
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ "[]=",      tile },    /* first entry is default */
-	{ "[M]",      monocle },
+	{ "[]=",      tile },
+	{ "TTT",      bstack },
+	{ ":::",      gaplessgrid },
+	{ "---",      horizgrid },
 	{ "[@]",      spiral },
 	{ "[\\]",     dwindle },
-	{ "H[]",      deck },
-	{ "TTT",      bstack },
+	{ "[D]",      deck },
+	{ "[M]",      monocle },
+	{ "|M|",      centeredmaster },
+	{ ">M>",      centeredfloatingmaster },
 	{ "===",      bstackhoriz },
 	{ "HHH",      grid },
 	{ "###",      nrowgrid },
-	{ "---",      horizgrid },
-	{ ":::",      gaplessgrid },
-	{ "|M|",      centeredmaster },
-	{ ">M>",      centeredfloatingmaster },
 	{ "><>",      NULL },    /* no layout function means floating behavior */
 	{ NULL,       NULL },
 };
@@ -173,21 +175,29 @@ ResourcePref resources[] = {
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
-	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
+	// { MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
-	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
-	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
+	// { MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
+	// { MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
 	{ MODKEY|ShiftMask,             XK_Return, zoom,           {0} },
-	{ MODKEY,                       XK_Tab,    view,           {0} },
+	// { MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY,                       XK_q,      killclient,     {0} },
-	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
-	{ MODKEY,			XK_f,      togglefullscr,  {0} },
-	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[1]} },
+	{ MODKEY,						XK_f,      togglefullscr,  {0} },
+	{ MODKEY,                       XK_y,      setlayout,      {.v = &layouts[0]} }, // tile
+	{ MODKEY|ShiftMask,				XK_y,      setlayout,      {.v = &layouts[1]} }, // bstack
+	{ MODKEY,                       XK_u,      setlayout,      {.v = &layouts[2]} }, // gapless grid
+	{ MODKEY|ShiftMask,             XK_u,      setlayout,      {.v = &layouts[3]} }, // horizontal grid
+	{ MODKEY,                       XK_i,      setlayout,      {.v = &layouts[4]} }, // spiral
+	{ MODKEY|ShiftMask,             XK_i,      setlayout,      {.v = &layouts[5]} }, // dwindle
+	{ MODKEY,                       XK_o,      setlayout,      {.v = &layouts[6]} }, // deck
+	{ MODKEY|ShiftMask,             XK_o,      setlayout,      {.v = &layouts[7]} }, // monocle
+	{ MODKEY,                       XK_p,      setlayout,      {.v = &layouts[8]} }, // centeredmaster
+	{ MODKEY|ShiftMask,             XK_p,      setlayout,      {.v = &layouts[9]} }, // centeredfloatingmaster
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
