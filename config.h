@@ -1,12 +1,12 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
-static const unsigned int ulinepad	= 5;	/* horizontal padding between the underline and tag */
+static const unsigned int ulinepad	= 0;	/* horizontal padding between the underline and tag */
 static const unsigned int ulinestroke	= 2;	/* thickness / height of the underline */
 static const unsigned int ulinevoffset	= 0;	/* how far above the bottom of the bar the line should appear */
 static const int ulineall 		= 0;	/* 1 to show underline on all tags, 0 for just the active ones */
 static unsigned int borderpx  = 4;        /* border pixel of windows */
-static unsigned int snap      = 32;       /* snap pixel */
+static unsigned int snap      = 16;       /* snap pixel */
 static const unsigned int gappih    = 10;       /* horiz inner gap between windows */
 static const unsigned int gappiv    = 10;       /* vert inner gap between windows */
 static const unsigned int gappoh    = 10;       /* horiz outer gap between windows and screen edge */
@@ -14,6 +14,8 @@ static const unsigned int gappov    = 10;       /* vert outer gap between window
 static int smartgaps          = 1;        /* 1 means no outer gap when there is only one window */
 static int showbar            = 1;        /* 0 means no bar */
 static int topbar             = 1;        /* 0 means bottom bar */
+static const int user_bh            = 26;        /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
+static const int vertpadbar		= 5;
 static char font[]            = "monospace:size=10";
 static char dmenufont[]       = "monospace:size=10";
 static const char *fonts[]          = { 
@@ -21,7 +23,7 @@ static const char *fonts[]          = {
 	"NotoColorEmoji:pixelsize=16:antialias=true:autohint=true"  
 	};
 
-static char selmonindicator[] = "[]";
+static char selmonindicator[] = "[ ]";
 static char normbgcolor[]           = "#222222";
 static char normbordercolor[]       = "#444444";
 static char normfgcolor[]           = "#bbbbbb";
@@ -61,6 +63,10 @@ static char *termcolor[] = {
   termcol13,
   termcol14,
   termcol15,
+  normfgcolor,
+  normbgcolor,
+  selbgcolor,
+  selbgcolor
 };
 static char *colors[][3] = {
        /*               fg           bg           border   */
@@ -155,10 +161,10 @@ ResourcePref resources[] = {
 		{ "resizehints",       	INTEGER, &resizehints },
 		{ "mfact",      	 	FLOAT,   &mfact },
 		{ "background",			STRING,  &termcol0 },
-		{ "foreground",			STRING,  &termcol1 },
+		{ "color1",				STRING,  &termcol1 },
 		{ "color2", 			STRING,  &termcol2 },
 		{ "color3", 			STRING,  &termcol3 },
-		{ "backgroundsecondary",STRING,  &termcol4 },
+		{ "color4",				STRING,  &termcol4 },
 		{ "color5", 			STRING,  &termcol5 },
 		{ "color6", 			STRING,  &termcol6 },
 		{ "color7", 			STRING,  &termcol7 },
