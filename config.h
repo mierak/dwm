@@ -82,15 +82,15 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class	instance	title		tags mask	isfloating   	isterminal 	noswallow 	monitor */
-	{ "Gimp",	NULL,		NULL,		0,		1,		0,		0,		-1 },
-	{ "Firefox",	NULL,		NULL,		1 << 8,		0,		0,		0,		-1 },
-	{ "St",		NULL,		NULL,		0,		0,		1,		0,		-1 },
-	{ "discord",	NULL,		NULL,		0,		0,		0,		0,		 1 },
-	{ "Steam",	NULL,		NULL,		0,		1,		0,		1,		 0 },
-	{ "Steam",	NULL,		"Friends List",	0,		0,		0,		1,		 1 },
-	{ "Microsoft Teams - Preview",	NULL,		NULL,		0,		0,		0,		1,		 -1 },
-	{ NULL,       	NULL,       	"Event Tester", 0,              0,	        0, 	        1,	        -1 }
+	/* class						instance	title			tags mask	isfloating   	isterminal 	noswallow 	monitor */
+	{ "Gimp",			NULL,		NULL,			0,			1,				0,			0,		-1 },
+	{ "Firefox",			NULL,		NULL,			1 << 8,			0,				0,			0,		-1 },
+	{ "St",				NULL,		NULL,			0,			0,				1,			0,		-1 },
+	{ "discord",			NULL,		NULL,			0,			0,				0,			0,		 1 },
+	{ "Steam",			NULL,		NULL,			0,			1,				0,			1,		 0 },
+	{ "Steam",			NULL,		"Friends List",		0,			0,				0,			1,		 1 },
+	{ "Microsoft Teams - Preview",	NULL,		NULL,			0,			0,				0,			1,		-1 },
+	{ NULL,       			NULL,       	"Event Tester", 	0,			0,				0,			1,		-1 }
 };
 
 /* layout(s) */
@@ -205,6 +205,8 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_o,      setlayout,      {.v = &layouts[7]} }, // monocle
 	{ MODKEY,                       XK_p,      setlayout,      {.v = &layouts[8]} }, // centeredmaster
 	{ MODKEY|ShiftMask,             XK_p,      setlayout,      {.v = &layouts[9]} }, // centeredfloatingmaster
+	{ MODKEY|ControlMask,			XK_comma,  cyclelayout,    {.i = -1 } },
+	{ MODKEY|ControlMask,           XK_period, cyclelayout,    {.i = +1 } },
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
@@ -247,8 +249,8 @@ static const Key keys[] = {
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
 static const Button buttons[] = {
 	/* click                event mask      button          function        argument */
-	{ ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
-	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
+	{ ClkLtSymbol,          0,              Button1,        cyclelayout,    {.i = 1 } },
+	{ ClkLtSymbol,          0,              Button3,        cyclelayout,    {.i = -1 } },
 	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
 	{ ClkStatusText,        0,              Button1,        sigstatusbar,   {.i = 1} },
 	{ ClkStatusText,        0,              Button2,        sigstatusbar,   {.i = 2} },
